@@ -15,10 +15,10 @@ function PlanificaArray(ArrayComSubarrays) {
 }
 
 function DivideStringComSimbolos(ArrayDeTermos,Simbolos) {
-    console.log(ArrayDeTermos);
-    const VerificaElentosIguais = ArrayDeTermos.some((Termo) => Simbolos.includes(Termo)); // checks if any element of ArrayDeTermos is in Simbolos
+    //console.log(ArrayDeTermos);
+    //const VerificaElentosIguais = ArrayDeTermos.some((Termo) => Simbolos.includes(Termo)); // checks if any element of ArrayDeTermos is in Simbolos
     // if a string has any symbol on it, it will be split into substrings
-    if (VerificaElentosIguais) {
+    /*if (VerificaElentosIguais) {
         console.log("Tem simbolos");
         let ArrayDeTermosComSimbolos = Simbolos;
         ArrayDeTermosComSimbolos.forEach((Simbolo) => {
@@ -28,11 +28,31 @@ function DivideStringComSimbolos(ArrayDeTermos,Simbolos) {
                     ArrayDeTermos.splice(ArrayDeTermos.indexOf(Termo), 1, ...ArrayDeSubtermos);
                 }
             }
-            );
+            );*/
 
+    for (let SimboloAtual = 0; SimboloAtual < Simbolos.length; SimboloAtual++) {
+        const Simbolo = Simbolos[SimboloAtual];
 
+        for (let i = 0; i < ArrayDeTermos.length; i++) {            
+            if (ArrayDeTermos[i].includes(Simbolo)) {
+                ArrayDeTermos[i] = ArrayDeTermos[i].substr(0, ArrayDeTermos.length + 1);
+                //console.log(ArrayDeTermos[i]);
+                let IndiceDoProximoTermo = ArrayDeTermos.length + 1;
+                //checks if a index in a array is null
+                if (ArrayDeTermos[IndiceDoProximoTermo] === undefined) {
+                    ArrayDeTermos[IndiceDoProximoTermo] = Simbolo;
+                    return ArrayDeTermos;
+                }
+                //console.log(IndiceDoProximoTermo);
+                //console.log(ArrayDeTermos);
+                ArrayDeTermos.splice(IndiceDoProximoTermo, 0, Simbolo);
+                //console.log(ArrayDeTermos);
+            }    
+        }
+        
+    }
 
-    for (let i = 0; i < ArrayDeTermos.length; i++) {
+    /*for (let i = 0; i < ArrayDeTermos.length; i++) {
         if (ArrayDeTermos[i].includes(Simbolo)) {
             ArrayDeTermos[i] = ArrayDeTermos[i].substr(0, ArrayDeTermos.length + 1);
             console.log(ArrayDeTermos[i]);
@@ -48,7 +68,7 @@ function DivideStringComSimbolos(ArrayDeTermos,Simbolos) {
             console.log(ArrayDeTermos);
         }
     }
-    console.log(ArrayDeTermos);
+    console.log(ArrayDeTermos);*/
     console.log("Simbolos devidamente separados.");
     return ArrayDeTermos;
 }
@@ -72,7 +92,7 @@ function ExaminaTermo(codigo) {
     for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < ArrayDeTermos.length; IndiceDoTermoAtual++) {
         console.log(IndiceDoTermoAtual);
         const TermoAtual = ArrayDeTermos[IndiceDoTermoAtual];
-        console.log(TermoAtual);
+        //console.log(TermoAtual);
         if (TermosValidos.includes(TermoAtual)) {
             console.log("Encontrado termo válido:" + TermoAtual);
             CategorizaTermo(TermoAtual);
