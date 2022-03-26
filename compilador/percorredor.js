@@ -20,12 +20,12 @@ function DivideStringComSimbolos(ArrayDeTermos,Simbolo) {
             && ArrayDeTermos[indice].length > 1
             && ArrayDeTermos[indice] !== SimboloComEspacos) // verifica se a string não é o próprio símbolo em si
             {                
-                ArrayDeTermos[indice] = ArrayDeTermos[indice].replaceAll(Simbolo,SimboloComEspacos);                
-                // insere um espaço entre o símbolo e a string
-                ArrayDeTermos[indice] = ArrayDeTermos[indice].split(" ");
-                // cria um novo array dentro do array original, com os símbolos em indices distintos
-                NovoArrayDeTermos = ArrayDeTermos.flat(Infinity);                
-                //cria um novo array com o array original planificado       
+              ArrayDeTermos[indice] = ArrayDeTermos[indice].replaceAll(Simbolo,SimboloComEspacos);                
+              // insere um espaço entre o símbolo e a string
+              ArrayDeTermos[indice] = ArrayDeTermos[indice].split(" ");
+              // cria um novo array dentro do array original, com os símbolos em indices distintos
+              NovoArrayDeTermos = ArrayDeTermos.flat(Infinity);                
+              //cria um novo array com o array original planificado       
             }                    
         }
         
@@ -51,21 +51,19 @@ function ExaminaTermo(codigo) {
         ,"^","$","€","£","¥","¢","¤","¬","¦","ª","º"
         ,"¹","²","³","¼","½","¾",'"'
     ]
-    let ArrayDeTermos;
+    let ArrayDeTermosInicial;
     for (let index = 0; index < Simbolos.length; index++) {
-        ArrayDeTermos = DivideStringComSimbolos(codigo,Simbolos[index]); // divide string with symbols
+        ArrayDeTermosInicial = DivideStringComSimbolos(codigo,Simbolos[index]); // divide string with symbols
     }
-    let Novo;
+    let ArrayDeTermosFinal;
     for (let index = 0; index < Simbolos.length; index++) {
-        Novo = DivideStringComSimbolos(ArrayDeTermos,Simbolos[index]); // divide string with symbols
+        ArrayDeTermosFinal = DivideStringComSimbolos(ArrayDeTermosInicial,Simbolos[index]); // divide string with symbols
     }    
-    
-    Novo = Novo.filter((elemento) => elemento);
-    //ArrayDeTermos = ArrayDeTermos.join('');
-    console.log(Novo);
-    for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < Novo.length; IndiceDoTermoAtual++) {
+    ArrayDeTermosFinal = ArrayDeTermosFinal.filter((elemento) => elemento);    
+    console.log(ArrayDeTermosFinal);
+    for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < ArrayDeTermosFinal.length; IndiceDoTermoAtual++) {
         //console.log(IndiceDoTermoAtual);
-        const TermoAtual = Novo[IndiceDoTermoAtual];
+        const TermoAtual = ArrayDeTermosFinal[IndiceDoTermoAtual];
         //console.log(TermoAtual);
         if (TermosValidos.includes(TermoAtual)) {
             console.log(IndiceDoTermoAtual + ". Encontrado termo válido: " + TermoAtual);
@@ -84,7 +82,7 @@ function CategorizaTermo(Termo) {
     if (Termo === Artigos) {
         ReconeceArtigo()
     }
-    if (isNaN(Termo) === false) {
+    if (isNaN(Termo) === false) {// se o termo não for um termo não numérico
         AtribuiValor(Termo);
     }
     // checks if Termo starts with double quotes
