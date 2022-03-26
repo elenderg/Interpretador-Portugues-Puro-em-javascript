@@ -16,7 +16,22 @@ function PlanificaArray(ArrayComSubarrays) {
 
 function DivideStringComSimbolos(ArrayDeTermos,Simbolos) {
     console.log(ArrayDeTermos);
-    const same = ArrayDeTermos.some((Termo) => Simbolos.includes(Termo)); // checks if any element of ArrayDeTermos is in Simbolos
+    const VerificaElentosIguais = ArrayDeTermos.some((Termo) => Simbolos.includes(Termo)); // checks if any element of ArrayDeTermos is in Simbolos
+    // if a string has any symbol on it, it will be split into substrings
+    if (VerificaElentosIguais) {
+        console.log("Tem simbolos");
+        let ArrayDeTermosComSimbolos = Simbolos;
+        ArrayDeTermosComSimbolos.forEach((Simbolo) => {
+            ArrayDeTermos.forEach((Termo) => {
+                if (Termo.includes(Simbolo)) {
+                    let ArrayDeSubtermos = Termo.split(Simbolo);
+                    ArrayDeTermos.splice(ArrayDeTermos.indexOf(Termo), 1, ...ArrayDeSubtermos);
+                }
+            }
+            );
+
+
+
     for (let i = 0; i < ArrayDeTermos.length; i++) {
         if (ArrayDeTermos[i].includes(Simbolo)) {
             ArrayDeTermos[i] = ArrayDeTermos[i].substr(0, ArrayDeTermos.length + 1);
