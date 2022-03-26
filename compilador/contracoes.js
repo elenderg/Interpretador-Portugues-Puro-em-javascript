@@ -1,0 +1,10 @@
+var Contracoes = ["à", "ao", "pro", "pra", "p/", "s/", "c/"
+                ,"àquele", "àquela", "daquele", "daquela", "daqueles", "daquelas"
+                ,"dele", "dela", "deles", "delas"
+                ,"desse", "dessa", "desses", "dessas"
+                ,"deste", "desta", "destes", "destas"
+                ,"do", "da", "dum", "duma", "dos", "das"
+                ,"no", "na", "nos", "nas", "num", "numa"
+                ,"nalgum", "nalguma", "nalguns", "nalgumas"
+                ,"nele", "nela", "neles", "nelas"                                  
+                ];

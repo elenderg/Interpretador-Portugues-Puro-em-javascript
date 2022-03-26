@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="compilador/artigos.js"></script>
+    <script src="compilador/contracoes.js"></script>    
+    <script src="compilador/operadores.js"></script>    
+    <script src="compilador/preposicoes.js"></script>
+    <script src="compilador/artigos.js"></script>
+    <script src="compilador/pronomes.js"></script>
+    <script src="compilador/verbos.js"></script> 
+    <script src="compilador/modificadores.js"></script>
+    <script src="compilador/PalavrasChave.js"></script>
+    <script src="compilador/percorredor.js"></script>
+    <style>
+        body{
+            background-color:lightskyblue;
+            color:white;
+        }
+        span{
+            font-weight: 700;
+            color: hsl(0, 0%, 0%);}
+
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <header id="header">
+            <h1 id="h1">Português Puro</h1>
+        </header>
+    </nav>
+    <article id="article">
+        <section id="section">
+            Digite o código abaixo e clique em <span>"Executar"</span> para testar seu código.
+        </section>
+    </article>
+    <div id="div">        
+            <label for="texto"></label>
+                <textarea name="texto" cols="30" rows="10" id="codigo" aria-label="texto">
+                    O texto abaixo contém números, letras, símbolos, etc:
+                    Atribua o valor "1" a uma variável chamada "x".
+                </textarea>
+            </label>
+            <button onclick="DivideCodigo()">Executar!</button>        
+    </div>
+    <aside>
+        Aside
+    </aside>
+    <footer>
+        Footer Copyright 2022 Elender ™ © ®
+    </footer>
+</body>
+</html>

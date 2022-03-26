@@ -1,0 +1,1 @@
+var Preposicoes = ["para","por"];
