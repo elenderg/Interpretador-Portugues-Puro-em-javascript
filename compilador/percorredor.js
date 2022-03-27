@@ -45,12 +45,7 @@ function ExaminaTermo(codigo) {
     // flatten array and its subarrays 
     let TermosValidos = PlanificaArray(PalavrasChave);
     console.log("A função PlanificaArray foi finalizada");    
-    let MeusSimbolos = [
-        ".",",",":",";","[","]","(",")","º","ª","°","+"
-        ,"-","%","/","*","=",">","<","¬","|","&","#","~"
-        ,"^","$","€","£","¥","¢","¤","¬","¦","ª","º"
-        ,"¹","²","³","¼","½","¾",'"'
-    ]
+    
     let ArrayDeTermosInicial;
     for (let index = 0; index < MeusSimbolos.length; index++) {
         ArrayDeTermosInicial = DivideStringComSimbolos(codigo,MeusSimbolos[index]); // divide string with symbols
