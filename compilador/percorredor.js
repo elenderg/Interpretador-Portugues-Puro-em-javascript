@@ -39,30 +39,27 @@ function DeslocaElementosDoArray(ArrayOriginal, IndiceInicial, IndiceFinal) {
     ArrayOriginal.splice(IndiceInicial, 1);
     ArrayOriginal.splice(IndiceFinal, 0, elemento);
 }
-
+var ArrayDeTermosFinal;
 
 function ExaminaTermo(codigo) {
     // flatten array and its subarrays 
     let TermosValidos = PlanificaArray(PalavrasChave);
     console.log("A função PlanificaArray foi finalizada");    
-    
     let ArrayDeTermosInicial;
     for (let index = 0; index < MeusSimbolos.length; index++) {
         ArrayDeTermosInicial = DivideStringComSimbolos(codigo,MeusSimbolos[index]); // divide string with symbols
     }
-    let ArrayDeTermosFinal;
+    
     for (let index = 0; index < MeusSimbolos.length; index++) {
         ArrayDeTermosFinal = DivideStringComSimbolos(ArrayDeTermosInicial,MeusSimbolos[index]); // divide string with symbols
     }    
     ArrayDeTermosFinal = ArrayDeTermosFinal.filter((elemento) => elemento);    
     console.log(ArrayDeTermosFinal);
-    for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < ArrayDeTermosFinal.length; IndiceDoTermoAtual++) {
-        //console.log(IndiceDoTermoAtual);
+    for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < ArrayDeTermosFinal.length; IndiceDoTermoAtual++) {        
         const TermoAtual = ArrayDeTermosFinal[IndiceDoTermoAtual];
-        //console.log(TermoAtual);
         if (TermosValidos.includes(TermoAtual)) {
             console.log(IndiceDoTermoAtual + ". Encontrado termo válido: " + TermoAtual);
-            CategorizaTermo(TermoAtual);
+            CategorizaTermo(TermoAtual, IndiceDoTermoAtual);
         }
         if (!TermosValidos.includes(TermoAtual)) {
             console.log(IndiceDoTermoAtual + ". Encontrado termo inválido: " + TermoAtual);
@@ -70,26 +67,26 @@ function ExaminaTermo(codigo) {
     }
 }
 
-function CategorizaTermo(Termo) {
+function CategorizaTermo(Termo, IndiceDoTermo){
     if (Termo === Operadores) {
-        ReconheceOperacao()
+        ReconheceOperacao(Termo, IndiceDoTermo)
     }
     if (Termo === Artigos) {
-        ReconeceArtigo()
+        ReconeceArtigo(Termo, IndiceDoTermo)
     }
     if (isNaN(Termo) === false) {// se o termo não for um termo não numérico
-        AtribuiValor(Termo);
+        AtribuiValor(Termo, IndiceDoTermo);
     }
     // checks if Termo starts with double quotes
     if (Termo.startsWith('"') && Termo.endsWith('"')) {
-        AtribuiValor(Termo);
+        AtribuiValor(Termo, IndiceDoTermo);
     }
     if (Termo.startsWith('$')) {
-        AtribuiValor(Termo);
+        AtribuiValor(Termo, IndiceDoTermo);
     }
 }
 
-function AtribuiValor(Termo) {
+function AtribuiValor(Termo, IndiceDoTermo) {
     if (Termo.startsWith('"')) {
         Termo = Termo.slice(1, Termo.length - 1); // remove double quotes
     }
@@ -99,5 +96,21 @@ function AtribuiValor(Termo) {
     }
     if (isNaN(Termo) === false) { // checks is Termo is a integer
         Termo = parseInt(Termo);
+    }
+}
+
+function ReconheceOperacao(Operacao, IndiceDoTermo) {
+    //converts a operation to its equivalent javascript code	
+    if (Operacao === "mais") {
+        Operacao = "+";
+    }
+    if (Operacao === "menos") {
+        Operacao = "-";
+    }
+    if (Operacao === "vezes") {
+        Operacao = "*";
+    }
+    if (Operacao === "dividido") {
+        Operacao = "/";
     }
 }
