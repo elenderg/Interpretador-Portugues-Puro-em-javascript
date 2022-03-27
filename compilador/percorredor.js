@@ -11,27 +11,38 @@ function PlanificaArray(ArrayComSubarrays) {
     return ArrayPlanificado;
 }
 
-function DivideStringComSimbolos(ArrayDeTermos,Simbolo) {
+function DivideStringComSimbolos(ArrayDeTermosInformados,SimboloDaLista) {
     let NovoArrayDeTermos;    
-    let SimboloComEspacos = " " + Simbolo + " ";
-    if(Simbolo != undefined){
-        for (let indice = 0; indice < ArrayDeTermos.length; indice++) {            
-            if(ArrayDeTermos[indice].includes(Simbolo) // verifica se a string contém o símbolo
-            && ArrayDeTermos[indice].length > 1
-            && ArrayDeTermos[indice] !== SimboloComEspacos) // verifica se a string não é o próprio símbolo em si
+    let SimboloComEspacos = " " + SimboloDaLista + " ";
+    if(SimboloDaLista != undefined){
+        for (let indice = 0; indice < ArrayDeTermosInformados.length; indice++)
+        {            
+            if(ArrayDeTermosInformados[indice].includes(SimboloDaLista) // verifica se a string contém o símbolo
+            && ArrayDeTermosInformados[indice].length > 1
+            && ArrayDeTermosInformados[indice] !== SimboloComEspacos) // verifica se a string não é o próprio símbolo em si
             {                
-              ArrayDeTermos[indice] = ArrayDeTermos[indice].replaceAll(Simbolo,SimboloComEspacos);                
-              // insere um espaço entre o símbolo e a string
-              ArrayDeTermos[indice] = ArrayDeTermos[indice].split(" ");
-              // cria um novo array dentro do array original, com os símbolos em indices distintos
-              NovoArrayDeTermos = ArrayDeTermos.flat(Infinity);                
-              //cria um novo array com o array original planificado       
+                ArrayDeTermosInformados[indice] = ArrayDeTermosInformados[indice].replaceAll(SimboloDaLista,SimboloComEspacos);                
+                // insere um espaço entre o símbolo e a string
+                ArrayDeTermosInformados[indice] = ArrayDeTermosInformados[indice].split(" ");
+                // cria um novo array dentro do array original, com os símbolos em indices distintos
+                NovoArrayDeTermos = ArrayDeTermosInformados.flat(Infinity);                
+                //cria um novo array com o array original planificado       
+                console.log("O símbolo " + SimboloDaLista + " foi devidamente separado.");
+            }
+            if(!ArrayDeTermosInformados[indice].includes(SimboloDaLista)) // verifica se a string contém o símbolo            
+            {
+                let SimbolosNaoEncontrados = "";
+                SimbolosNaoEncontrados = SimbolosNaoEncontrados + SimboloDaLista;
+                NovoArrayDeTermos = ArrayDeTermosInformados.flat(Infinity);                
+                //cria um novo array com o array original planificado       
+                //console.log("O símbolo " + SimbolosNaoEncontrados + " não encontrado junto a uma string durante essa passada no array.");
             }                    
         }
-        
+        if (NovoArrayDeTermos !== undefined){
+            return NovoArrayDeTermos;
+        }
     }
-    console.log(Simbolo + " devidamente separado.");
-    return NovoArrayDeTermos; 
+     
 }
 
 function DeslocaElementosDoArray(ArrayOriginal, IndiceInicial, IndiceFinal) {
@@ -39,54 +50,80 @@ function DeslocaElementosDoArray(ArrayOriginal, IndiceInicial, IndiceFinal) {
     ArrayOriginal.splice(IndiceInicial, 1);
     ArrayOriginal.splice(IndiceFinal, 0, elemento);
 }
-var ArrayDeTermosFinal;
+
 
 function ExaminaTermo(codigo) {
     // flatten array and its subarrays 
     let TermosValidos = PlanificaArray(PalavrasChave);
     console.log("A função PlanificaArray foi finalizada");    
+    let MeusSimbolos = [
+        ".",",",":",";","[","]","(",")","º","ª","°","+"
+        ,"-","%","/","*","=",">","<","¬","|","&","#","~"
+        ,"^","$","€","£","¥","¢","¤","¬","¦","ª","º"
+        ,"¹","²","³","¼","½","¾",'"'
+    ]
     let ArrayDeTermosInicial;
     for (let index = 0; index < MeusSimbolos.length; index++) {
         ArrayDeTermosInicial = DivideStringComSimbolos(codigo,MeusSimbolos[index]); // divide string with symbols
-    }
-    
+    }    
+    var ArrayDeTermosFinal = [];
     for (let index = 0; index < MeusSimbolos.length; index++) {
         ArrayDeTermosFinal = DivideStringComSimbolos(ArrayDeTermosInicial,MeusSimbolos[index]); // divide string with symbols
+        //console.log(ArrayDeTermosFinal);
     }    
-    ArrayDeTermosFinal = ArrayDeTermosFinal.filter((elemento) => elemento);    
-    console.log(ArrayDeTermosFinal);
-    for (let IndiceDoTermoAtual = 0; IndiceDoTermoAtual < ArrayDeTermosFinal.length; IndiceDoTermoAtual++) {        
-        const TermoAtual = ArrayDeTermosFinal[IndiceDoTermoAtual];
-        if (TermosValidos.includes(TermoAtual)) {
-            console.log(IndiceDoTermoAtual + ". Encontrado termo válido: " + TermoAtual);
-            CategorizaTermo(TermoAtual, IndiceDoTermoAtual);
-        }
-        if (!TermosValidos.includes(TermoAtual)) {
-            console.log(IndiceDoTermoAtual + ". Encontrado termo inválido: " + TermoAtual);
+    if (ArrayDeTermosFinal !== undefined)
+    {
+    
+    ArrayDeTermosFinal = ArrayDeTermosFinal.filter((elemento) => elemento);
+    }
+    if (ArrayDeTermosFinal == undefined)
+    {
+        console.log("array não inicializado");
+        console.log(codigo);
+    }
+    //ArrayDeTermos = ArrayDeTermos.join('');
+    if (ArrayDeTermosFinal !== undefined){
+    console.log("O array final está assim:" + ArrayDeTermosFinal);
+        for (
+            let IndiceDoTermoAtual = 0; 
+            IndiceDoTermoAtual < ArrayDeTermosFinal.length; 
+            IndiceDoTermoAtual++
+            ) 
+        {
+            //console.log(IndiceDoTermoAtual);
+            const TermoAtual = ArrayDeTermosFinal[IndiceDoTermoAtual];
+            //console.log(TermoAtual);
+            if (TermosValidos.includes(TermoAtual)) {
+                console.log(IndiceDoTermoAtual + ". Encontrado termo válido: " + TermoAtual);
+                CategorizaTermo(TermoAtual);
+            }
+            if (!TermosValidos.includes(TermoAtual)) {
+                console.log(IndiceDoTermoAtual + ". Encontrado termo inválido: " + TermoAtual);
+            }
         }
     }
 }
 
-function CategorizaTermo(Termo, IndiceDoTermo){
+function CategorizaTermo(Termo) {
     if (Termo === Operadores) {
-        ReconheceOperacao(Termo, IndiceDoTermo)
+        ReconheceOperacao()
     }
     if (Termo === Artigos) {
-        ReconeceArtigo(Termo, IndiceDoTermo)
+        ReconeceArtigo()
     }
-    if (isNaN(Termo) === false) {// se o termo não for um termo não numérico
-        AtribuiValor(Termo, IndiceDoTermo);
+    if (isNaN(Termo) === false) {
+        AtribuiValor(Termo);
     }
     // checks if Termo starts with double quotes
     if (Termo.startsWith('"') && Termo.endsWith('"')) {
-        AtribuiValor(Termo, IndiceDoTermo);
+        AtribuiValor(Termo);
     }
     if (Termo.startsWith('$')) {
-        AtribuiValor(Termo, IndiceDoTermo);
+        AtribuiValor(Termo);
     }
 }
 
-function AtribuiValor(Termo, IndiceDoTermo) {
+function AtribuiValor(Termo) {
     if (Termo.startsWith('"')) {
         Termo = Termo.slice(1, Termo.length - 1); // remove double quotes
     }
@@ -96,21 +133,5 @@ function AtribuiValor(Termo, IndiceDoTermo) {
     }
     if (isNaN(Termo) === false) { // checks is Termo is a integer
         Termo = parseInt(Termo);
-    }
-}
-
-function ReconheceOperacao(Operacao, IndiceDoTermo) {
-    //converts a operation to its equivalent javascript code	
-    if (Operacao === "mais") {
-        Operacao = "+";
-    }
-    if (Operacao === "menos") {
-        Operacao = "-";
-    }
-    if (Operacao === "vezes") {
-        Operacao = "*";
-    }
-    if (Operacao === "dividido") {
-        Operacao = "/";
     }
 }
